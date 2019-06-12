@@ -14,10 +14,10 @@
 var 已经首行缩进 = false;
 function 首行缩进函数() {
     if(已经首行缩进){
-       $("div.RichContent-inner").css("text-indent", "");
+       $("div.RichText").css("text-indent", "");
         已经首行缩进 = false;
     } else {
-       $("div.RichContent-inner").css("text-indent", "2em");
+       $("div.RichText").css("text-indent", "2em");
         已经首行缩进 = true;
     }
 }
@@ -98,6 +98,12 @@ function 添加查看关注话题按钮函数() {
     $("button#查看关注话题按钮id").click(添加关注话题列表函数);
 }
 
+function 修复知乎悬浮按钮被遮挡函数() {
+    //知乎文章页面有个BUG，悬浮按钮会被网页底部的「赞同、评论、分享、收藏」一栏遮挡，用z-index修复
+    $("div.CornerButtons").css("z-index", "5");
+}
+
 添加首行缩进按钮函数();
 添加夜间模式按钮函数();
 添加查看关注话题按钮函数();
+修复知乎悬浮按钮被遮挡函数();

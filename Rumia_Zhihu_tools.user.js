@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         Rumia_Zhihu_tools
 // @namespace    https://www.zhihu.com/people/lu-mi-ya-56
-// @version      0.21
+// @version      0.31
 // @description  露米娅写的知乎脚本、是~这样吗~
 // @author       Rumia
 // @match        *://*.zhihu.com/*
 // @require      http://code.jquery.com/jquery-3.4.1.min.js
+// @require      http://html2canvas.hertzen.com/dist/html2canvas.min.js
 // @grant        none
 // ==/UserScript==
 
@@ -105,18 +106,22 @@ function 修复知乎悬浮按钮被遮挡函数() {
     $("div.CornerButtons").css("z-index", "5");
 }
 
-var 保存按钮style代码 = '<style>button#保存按钮id {transition-duration: 0.4s;} button#保存按钮id:hover{ background-color:#f6f6f6;}</style>';
+var 保存按钮style代码 = '<style>button#保存按钮id, button#截图按钮id{transition-duration: 0.4s;} button#保存按钮id:hover, button#截图按钮id:hover{ background-color:#f6f6f6;}</style>';
 $("body").prepend(保存按钮style代码);
 var 已经添加保存按钮 = false;
 function 添加保存按钮函数() {
     if(已经添加保存按钮){
         $("button#保存按钮id").remove();
+        $("button#截图按钮id").remove();
         已经添加保存按钮 = false;
     } else {
         $("button#保存按钮id").show();
-        var SVG代码 = '<svg style="vertical-align: middle;" class="svg-icon" viewBox="0 0 20 20" fill="currentColor" height="1.5em" width="1.5em"><path d="M17.064,4.656l-2.05-2.035C14.936,2.544,14.831,2.5,14.721,2.5H3.854c-0.229,0-0.417,0.188-0.417,0.417v14.167c0,0.229,0.188,0.417,0.417,0.417h12.917c0.229,0,0.416-0.188,0.416-0.417V4.952C17.188,4.84,17.144,4.733,17.064,4.656M6.354,3.333h7.917V10H6.354V3.333z M16.354,16.667H4.271V3.333h1.25v7.083c0,0.229,0.188,0.417,0.417,0.417h8.75c0.229,0,0.416-0.188,0.416-0.417V3.886l1.25,1.239V16.667z M13.402,4.688v3.958c0,0.229-0.186,0.417-0.417,0.417c-0.229,0-0.417-0.188-0.417-0.417V4.688c0-0.229,0.188-0.417,0.417-0.417C13.217,4.271,13.402,4.458,13.402,4.688"></path></svg>'
-        var 保存按钮html代码 = '<button id="保存按钮id" type="button" class="Button">'+SVG代码+'保存HTML</button>';
+        var 保存按钮SVG代码 = '<svg style="vertical-align: middle;" class="svg-icon" viewBox="0 0 20 20" fill="currentColor" height="1.5em" width="1.5em"><path d="M17.064,4.656l-2.05-2.035C14.936,2.544,14.831,2.5,14.721,2.5H3.854c-0.229,0-0.417,0.188-0.417,0.417v14.167c0,0.229,0.188,0.417,0.417,0.417h12.917c0.229,0,0.416-0.188,0.416-0.417V4.952C17.188,4.84,17.144,4.733,17.064,4.656M6.354,3.333h7.917V10H6.354V3.333z M16.354,16.667H4.271V3.333h1.25v7.083c0,0.229,0.188,0.417,0.417,0.417h8.75c0.229,0,0.416-0.188,0.416-0.417V3.886l1.25,1.239V16.667z M13.402,4.688v3.958c0,0.229-0.186,0.417-0.417,0.417c-0.229,0-0.417-0.188-0.417-0.417V4.688c0-0.229,0.188-0.417,0.417-0.417C13.217,4.271,13.402,4.458,13.402,4.688"></path></svg>'
+        var 保存按钮html代码 = '<button id="保存按钮id" type="button" class="Button">'+保存按钮SVG代码+'保存HTML</button>';
         $("div.ContentItem").prepend(保存按钮html代码);
+        var 截图按钮SVG代码 = '<svg style="vertical-align: middle;" class="svg-icon" viewBox="0 0 20 20" fill="currentColor" height="1.5em" width="1.5em"><path d="M17.064,4.656l-2.05-2.035C14.936,2.544,14.831,2.5,14.721,2.5H3.854c-0.229,0-0.417,0.188-0.417,0.417v14.167c0,0.229,0.188,0.417,0.417,0.417h12.917c0.229,0,0.416-0.188,0.416-0.417V4.952C17.188,4.84,17.144,4.733,17.064,4.656M6.354,3.333h7.917V10H6.354V3.333z M16.354,16.667H4.271V3.333h1.25v7.083c0,0.229,0.188,0.417,0.417,0.417h8.75c0.229,0,0.416-0.188,0.416-0.417V3.886l1.25,1.239V16.667z M13.402,4.688v3.958c0,0.229-0.186,0.417-0.417,0.417c-0.229,0-0.417-0.188-0.417-0.417V4.688c0-0.229,0.188-0.417,0.417-0.417C13.217,4.271,13.402,4.458,13.402,4.688"></path></svg>'
+        var 截图按钮html代码 = '<button id="截图按钮id" type="button" class="Button">'+截图按钮SVG代码+'保存截图</button>';
+        $("div.ContentItem").prepend(截图按钮html代码);
         $("button#保存按钮id").click(function(){
             var 内容div = $(this).parents("div.ContentItem");
             内容div.find("button:contains('阅读全文')").click();//强制展开
@@ -127,21 +132,58 @@ function 添加保存按钮函数() {
             }
             保存html(内容html,文件名);
         });
+
+        $("button#截图按钮id").click(function(){
+            var 内容div = $(this).parents("div.ContentItem");
+            内容div.find("button:contains('阅读全文')").click();//强制展开，因为强制展开时有一些图片没有加载，导致截图的div高度不对，因此需要设置论询……
+            var setInterval返回值 = setInterval(function(){
+                if(!所有图片已加载(内容div)){
+                    return;
+                }//用setInterval实现轮询……
+                clearInterval(setInterval返回值);
+                var 文件名 = 内容div.find("h2.ContentItem-title").text();
+                var 原滚动条位置 = $("body,html").scrollTop();
+                $("body,html").scrollTop(0);//实践中发现滚动条越往下，截图出来空白就越大，所以必须这样做，否则截取出来就是一片空白，原理咱也不懂呢……
+                html2canvas(内容div[0],{useCORS:true}).then(canvas => {
+                    canvas.toBlob(function(blob){
+                        保存blob(blob, 文件名);
+                    });
+                    $("body,html").scrollTop(原滚动条位置);
+                });//html2canvas不能直接使用jQuery对象，要用DOM对象
+            },400);
+        });
+
         已经添加保存按钮 = true;
     }
 }
 
 function 保存html(html,文件名) {
     var bl = new Blob([html], {type: "text/html"});
-    var a = document.createElement("a");
-    a.download = 文件名+".html";
+    保存blob(bl, 文件名);
     //a.href = "data:text/html," + html;
-    a.href = URL.createObjectURL(bl);
-    a.hidden = true;
-    a.click();
     //改进为BLOB下载，防止href太太太太太太长……
     //感谢来自StackOverflow的Awesomeness01
     //https://stackoverflow.com/questions/27177661/save-html-locally-with-javascript/29462236#29462236
+}
+
+function 保存blob(blob, 文件名){
+    var a = document.createElement("a");
+    a.download = 文件名;
+    a.href = URL.createObjectURL(blob);
+    a.hidden = true;
+    a.click();
+    a.remove();
+}
+
+function 所有图片已加载(jQuery对象){
+    var 加载完成 = true;
+    jQuery对象.find('img').each(function(){
+        if(this.height === 0){
+            加载完成 = false;
+            return false;
+        }
+    });
+    return 加载完成;
 }
 
 function 添加显示保存按钮函数() {

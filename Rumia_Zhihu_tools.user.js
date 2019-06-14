@@ -115,8 +115,8 @@ function 添加保存按钮函数() {
     } else {
         $("button#保存按钮id").show();
         var SVG代码 = '<svg style="vertical-align: middle;" class="svg-icon" viewBox="0 0 20 20" fill="currentColor" height="1.5em" width="1.5em"><path d="M17.064,4.656l-2.05-2.035C14.936,2.544,14.831,2.5,14.721,2.5H3.854c-0.229,0-0.417,0.188-0.417,0.417v14.167c0,0.229,0.188,0.417,0.417,0.417h12.917c0.229,0,0.416-0.188,0.416-0.417V4.952C17.188,4.84,17.144,4.733,17.064,4.656M6.354,3.333h7.917V10H6.354V3.333z M16.354,16.667H4.271V3.333h1.25v7.083c0,0.229,0.188,0.417,0.417,0.417h8.75c0.229,0,0.416-0.188,0.416-0.417V3.886l1.25,1.239V16.667z M13.402,4.688v3.958c0,0.229-0.186,0.417-0.417,0.417c-0.229,0-0.417-0.188-0.417-0.417V4.688c0-0.229,0.188-0.417,0.417-0.417C13.217,4.271,13.402,4.458,13.402,4.688"></path></svg>'
-        var 按钮html代码 = '<button id="保存按钮id" type="button" class="Button">'+SVG代码+'保存</button>';
-        $("div.ContentItem").prepend(按钮html代码);
+        var 保存按钮html代码 = '<button id="保存按钮id" type="button" class="Button">'+SVG代码+'保存HTML</button>';
+        $("div.ContentItem").prepend(保存按钮html代码);
         $("button#保存按钮id").click(function(){
             var 内容div = $(this).parents("div.ContentItem");
             内容div.find("button:contains('阅读全文')").click();//强制展开
@@ -142,7 +142,7 @@ function 添加显示保存按钮函数() {
     if(document.domain == "zhuanlan.zhihu.com")
         return;
     var SVG代码 = '<svg class="svg-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M17.064,4.656l-2.05-2.035C14.936,2.544,14.831,2.5,14.721,2.5H3.854c-0.229,0-0.417,0.188-0.417,0.417v14.167c0,0.229,0.188,0.417,0.417,0.417h12.917c0.229,0,0.416-0.188,0.416-0.417V4.952C17.188,4.84,17.144,4.733,17.064,4.656M6.354,3.333h7.917V10H6.354V3.333z M16.354,16.667H4.271V3.333h1.25v7.083c0,0.229,0.188,0.417,0.417,0.417h8.75c0.229,0,0.416-0.188,0.416-0.417V3.886l1.25,1.239V16.667z M13.402,4.688v3.958c0,0.229-0.186,0.417-0.417,0.417c-0.229,0-0.417-0.188-0.417-0.417V4.688c0-0.229,0.188-0.417,0.417-0.417C13.217,4.271,13.402,4.458,13.402,4.688"></path></svg>'
-    var 按钮html代码 = '<div class="CornerAnimayedFlex"><button id="显示保存按钮id" data-tooltip="保存" data-tooltip-position="left" data-tooltip-will-hide-on-click="true" aria-label="保存" type="button" class="Button CornerButton Button--plain">'+SVG代码+'</button></div>';
+    var 按钮html代码 = '<div class="CornerAnimayedFlex"><button id="显示保存按钮id" data-tooltip="保存内容" data-tooltip-position="left" data-tooltip-will-hide-on-click="true" aria-label="保存内容" type="button" class="Button CornerButton Button--plain">'+SVG代码+'</button></div>';
     $("div.CornerButtons").prepend(按钮html代码);
     $("button#显示保存按钮id").click(添加保存按钮函数);
 }

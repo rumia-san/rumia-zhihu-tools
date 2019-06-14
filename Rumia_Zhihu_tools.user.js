@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Rumia_Zhihu_tools
 // @namespace    https://www.zhihu.com/people/lu-mi-ya-56
-// @version      0.20
+// @version      0.21
 // @description  露米娅写的知乎脚本、是~这样吗~
 // @author       Rumia
 // @match        *://*.zhihu.com/*
@@ -132,10 +132,16 @@ function 添加保存按钮函数() {
 }
 
 function 保存html(html,文件名) {
+    var bl = new Blob([html], {type: "text/html"});
     var a = document.createElement("a");
     a.download = 文件名+".html";
-    a.href = "data:text/html," + html;
+    //a.href = "data:text/html," + html;
+    a.href = URL.createObjectURL(bl);
+    a.hidden = true;
     a.click();
+    //改进为BLOB下载，防止href太太太太太太长……
+    //感谢来自StackOverflow的Awesomeness01
+    //https://stackoverflow.com/questions/27177661/save-html-locally-with-javascript/29462236#29462236
 }
 
 function 添加显示保存按钮函数() {

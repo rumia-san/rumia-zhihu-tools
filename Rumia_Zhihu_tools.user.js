@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Rumia_Zhihu_tools
 // @namespace    https://www.zhihu.com/people/lu-mi-ya-56
-// @version      0.12
+// @version      0.20
 // @description  露米娅写的知乎脚本、是~这样吗~
 // @author       Rumia
 // @match        *://*.zhihu.com/*
@@ -51,7 +51,7 @@ function 添加夜间模式按钮函数() {
 }
 
 function 获取用户ID(){
-    var 用户ID对象 = JSON.parse($("div#root").children("div").attr("data-zop-usertoken"));
+    var 用户ID对象 = JSON.parse($("div[data-zop-usertoken]").attr("data-zop-usertoken"));
     return 用户ID对象.urlToken;
 }
 
@@ -105,7 +105,51 @@ function 修复知乎悬浮按钮被遮挡函数() {
     $("div.CornerButtons").css("z-index", "5");
 }
 
+var 保存按钮style代码 = '<style>button#保存按钮id {transition-duration: 0.4s;} button#保存按钮id:hover{ background-color:#f6f6f6;}</style>';
+$("body").prepend(保存按钮style代码);
+var 已经添加保存按钮 = false;
+function 添加保存按钮函数() {
+    if(已经添加保存按钮){
+        $("button#保存按钮id").remove();
+        已经添加保存按钮 = false;
+    } else {
+        $("button#保存按钮id").show();
+        var SVG代码 = '<svg style="vertical-align: middle;" class="svg-icon" viewBox="0 0 20 20" fill="currentColor" height="1.5em" width="1.5em"><path d="M17.064,4.656l-2.05-2.035C14.936,2.544,14.831,2.5,14.721,2.5H3.854c-0.229,0-0.417,0.188-0.417,0.417v14.167c0,0.229,0.188,0.417,0.417,0.417h12.917c0.229,0,0.416-0.188,0.416-0.417V4.952C17.188,4.84,17.144,4.733,17.064,4.656M6.354,3.333h7.917V10H6.354V3.333z M16.354,16.667H4.271V3.333h1.25v7.083c0,0.229,0.188,0.417,0.417,0.417h8.75c0.229,0,0.416-0.188,0.416-0.417V3.886l1.25,1.239V16.667z M13.402,4.688v3.958c0,0.229-0.186,0.417-0.417,0.417c-0.229,0-0.417-0.188-0.417-0.417V4.688c0-0.229,0.188-0.417,0.417-0.417C13.217,4.271,13.402,4.458,13.402,4.688"></path></svg>'
+        var 按钮html代码 = '<button id="保存按钮id" type="button" class="Button">'+SVG代码+'保存</button>';
+        $("div.ContentItem").prepend(按钮html代码);
+        $("button#保存按钮id").click(function(){
+            var 内容div = $(this).parents("div.ContentItem");
+            内容div.find("button:contains('阅读全文')").click();//强制展开
+            var 内容html = 内容div.html();
+            var 文件名 = 内容div.find("h2.ContentItem-title").text();
+            if(!文件名 || 0 === 文件名.length){
+                文件名 = $(document).find("title").text();
+            }
+            保存html(内容html,文件名);
+        });
+        已经添加保存按钮 = true;
+    }
+}
+
+function 保存html(html,文件名) {
+    var a = document.createElement("a");
+    a.download = 文件名+".html";
+    a.href = "data:text/html," + html;
+    a.click();
+}
+
+function 添加显示保存按钮函数() {
+    if(document.domain == "zhuanlan.zhihu.com")
+        return;
+    var SVG代码 = '<svg class="svg-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M17.064,4.656l-2.05-2.035C14.936,2.544,14.831,2.5,14.721,2.5H3.854c-0.229,0-0.417,0.188-0.417,0.417v14.167c0,0.229,0.188,0.417,0.417,0.417h12.917c0.229,0,0.416-0.188,0.416-0.417V4.952C17.188,4.84,17.144,4.733,17.064,4.656M6.354,3.333h7.917V10H6.354V3.333z M16.354,16.667H4.271V3.333h1.25v7.083c0,0.229,0.188,0.417,0.417,0.417h8.75c0.229,0,0.416-0.188,0.416-0.417V3.886l1.25,1.239V16.667z M13.402,4.688v3.958c0,0.229-0.186,0.417-0.417,0.417c-0.229,0-0.417-0.188-0.417-0.417V4.688c0-0.229,0.188-0.417,0.417-0.417C13.217,4.271,13.402,4.458,13.402,4.688"></path></svg>'
+    var 按钮html代码 = '<div class="CornerAnimayedFlex"><button id="显示保存按钮id" data-tooltip="保存" data-tooltip-position="left" data-tooltip-will-hide-on-click="true" aria-label="保存" type="button" class="Button CornerButton Button--plain">'+SVG代码+'</button></div>';
+    $("div.CornerButtons").prepend(按钮html代码);
+    $("button#显示保存按钮id").click(添加保存按钮函数);
+}
+
+
 添加首行缩进按钮函数();
 添加夜间模式按钮函数();
 添加查看关注话题按钮函数();
 修复知乎悬浮按钮被遮挡函数();
+添加显示保存按钮函数();

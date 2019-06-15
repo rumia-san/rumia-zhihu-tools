@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Rumia_Zhihu_tools
 // @namespace    https://www.zhihu.com/people/lu-mi-ya-56
-// @version      0.32
+// @version      0.33
 // @description  露米娅写的知乎脚本、是~这样吗~
 // @author       Rumia
 // @match        *://*.zhihu.com/*
@@ -15,10 +15,12 @@
 var 已经首行缩进 = false;
 function 首行缩进函数() {
     if(已经首行缩进){
-       $("div.RichText").css("text-indent", "");
+        $("div.RichContent-inner").css("text-indent", "");
+        $("div.Post-RichTextContainer").css("text-indent", "");
         已经首行缩进 = false;
     } else {
-       $("div.RichText").css("text-indent", "2em");
+        $("div.RichContent-inner").css("text-indent", "2em");//普通页面
+        $("div.Post-RichTextContainer").css("text-indent", "2em");//适配文章页面
         已经首行缩进 = true;
     }
 }

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Rumia_Zhihu_tools
 // @namespace    https://www.zhihu.com/people/lu-mi-ya-56
-// @version      0.31
+// @version      0.32
 // @description  露米娅写的知乎脚本、是~这样吗~
 // @author       Rumia
 // @match        *://*.zhihu.com/*
@@ -136,6 +136,7 @@ function 添加保存按钮函数() {
         $("button#截图按钮id").click(function(){
             var 内容div = $(this).parents("div.ContentItem");
             内容div.find("button:contains('阅读全文')").click();//强制展开，因为强制展开时有一些图片没有加载，导致截图的div高度不对，因此需要设置论询……
+            强制加载lazyload图片(内容div);
             var setInterval返回值 = setInterval(function(){
                 if(!所有图片已加载(内容div)){
                     return;
@@ -178,7 +179,7 @@ function 保存blob(blob, 文件名){
 function 所有图片已加载(jQuery对象){
     var 加载完成 = true;
     jQuery对象.find('img').each(function(){
-        if(this.height === 0){
+        if(this.height === 0 || this.complete == false){
             加载完成 = false;
             return false;
         }
@@ -195,6 +196,19 @@ function 添加显示保存按钮函数() {
     $("button#显示保存按钮id").click(添加保存按钮函数);
 }
 
+function 强制加载lazyload图片(jQuery对象) {
+    //否则截出来就是空白了……
+    jQuery对象.find("div.origin_image").each(function(){
+        var 图片url = $(this).attr("data-src");
+        var 图片style = $(this).attr("style");
+        var 图片 = $('<img>');
+        图片.attr("src", 图片url);
+        图片.attr("style", 图片style);
+        图片.attr("class", "origin_image");
+        $(this).after(图片);
+        $(this).remove();
+    });
+}
 
 添加首行缩进按钮函数();
 添加夜间模式按钮函数();

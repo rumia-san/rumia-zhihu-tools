@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Rumia_Zhihu_tools
 // @namespace    https://www.zhihu.com/people/lu-mi-ya-56
-// @version      0.33
+// @version      0.34
 // @description  露米娅写的知乎脚本、是~这样吗~
 // @author       Rumia
 // @match        *://*.zhihu.com/*
@@ -70,9 +70,15 @@ function 生成关注话题li(关注话题名称, 关注话题id){
 var 已经添加关注话题列表 = false;
 var 首次添加关注话题列表 = true;
 function 添加关注话题列表函数(){
+    var 要添加列表的div;
+    if(document.URL.indexOf("www.zhihu.com/people/") === -1){
+        要添加列表的div = $("div.Topstory-container");
+    } else {
+        要添加列表的div = $("div.Profile-main"); //适配用户页面
+    }
     if(首次添加关注话题列表){
-        $("div.Topstory-container").css("width", "1200px");
-        $("div.Topstory-container").append('<div id="关注话题列表id" class="Sticky"><div class="Card"><ul id="关注话题列表id" class="GlobalSideBar-navList"></ul></div></div>');
+        要添加列表的div.css("width", "1200px");
+        要添加列表的div.append('<div id="关注话题列表id" class="Sticky" style="margin-left:10px;"><div class="Card"><ul id="关注话题列表id" class="GlobalSideBar-navList"></ul></div></div>');
         $.get(获取关注话题URL(),function(res,status){
             for(var i = 0; i < res.data.length; i++){
                 var 关注话题名称 = res.data[i].topic.name;
@@ -80,16 +86,15 @@ function 添加关注话题列表函数(){
                 $("ul#关注话题列表id").append(生成关注话题li(关注话题名称, 关注话题id));
             }
         });
-        $("div#关注话题列表id").css("margin-left", "10px");
         首次添加关注话题列表 = false;
         已经添加关注话题列表 = true;
     } else if (已经添加关注话题列表) {
         $("div#关注话题列表id").hide();
-        $("div.Topstory-container").css("width", "1000px");
+        要添加列表的div.css("width", "1000px");
         已经添加关注话题列表 = false;
     } else {
         $("div#关注话题列表id").show();
-        $("div.Topstory-container").css("width", "1200px");
+        要添加列表的div.css("width", "1200px");
         已经添加关注话题列表 = true;
     }
 }

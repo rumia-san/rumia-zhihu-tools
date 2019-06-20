@@ -23,6 +23,16 @@ JavaScript 是什么、也许跟 Java 一样吧~
 
 SVG 来源：[SVG Icons](http://svgicons.sparkk.fr/)
 
+# 使用效果
+## 夜间模式
+![夜间模式](./images/1.png)
+## 首行缩进
+![首行缩进](./images/2.png)
+## 关注话题
+![关注话题](./images/3.png)
+## 保存内容
+![保存内容](./images/4.png)
+
 # 更新历史
 ## v0.34
 - 修复了在用户页面（URL 以 www.zhihu.com/people/ 开始的页面）下无法查看关注列表的功能~

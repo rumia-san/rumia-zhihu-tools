@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Rumia_Zhihu_tools
 // @namespace    https://www.zhihu.com/people/lu-mi-ya-56
-// @version      0.34
+// @version      0.35
 // @description  露米娅写的知乎脚本、是~这样吗~
 // @author       Rumia
 // @match        *://*.zhihu.com/*
@@ -151,6 +151,9 @@ function 添加保存按钮函数() {
                 }//用setInterval实现轮询……
                 clearInterval(setInterval返回值);
                 var 文件名 = 内容div.find("h2.ContentItem-title").text();
+                if(!文件名 || 0 === 文件名.length){
+                    文件名 = $(document).find("title").text();
+                }
                 var 原滚动条位置 = $("body,html").scrollTop();
                 $("body,html").scrollTop(0);//实践中发现滚动条越往下，截图出来空白就越大，所以必须这样做，否则截取出来就是一片空白，原理咱也不懂呢……
                 html2canvas(内容div[0],{useCORS:true}).then(canvas => {
